@@ -1,6 +1,6 @@
 # P607_Project2_MCS
 
-A simulation of particles in a 2D box, with or without an external driven force field (could be a function by itself, or constant) from an external beam.
+A simulation of particles (potentially interact with each others on some random scale) in a 2D box, with or without an external driven force field (could be a function by itself, or constant) from an external beam.
 
 ## Pseudo-Code:
 ### Initialize the x-y positions of particles numbers, initial velocities of particles, and beam parameters using Monte Carlo Simulation.
