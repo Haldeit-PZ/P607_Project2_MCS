@@ -7,7 +7,7 @@ class Particle():
 		self.mass = m
 		self.pos = pos
 		self.vel = v
-		#self.z = np.array([m, pos, v])
+		self.z = np.concatenate((pos, v))
 
 	def energy(self):
 		self.kinetic = 0.5 * self.mass * np.dot(self.vel, self.vel)
@@ -32,9 +32,12 @@ class System():
 			ind_energy = ind_part.energy()
 			self.total_energy += ind_energy
 		return self.total_energy
+
+	def step(self):
+		pass
 			
 x = System(2, 2, 1)
-print(x.particles[0].pos,x.field, x.max_x)
+print(x.particles[0].z,x.field, x.max_x)
 print(x.total_energy())
 		
 			
