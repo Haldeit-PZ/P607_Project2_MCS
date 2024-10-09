@@ -1,6 +1,7 @@
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
+import intergration as igt
 
 class Particle():
 	def __init__(self, m, pos, v):
@@ -15,7 +16,10 @@ class Particle():
 		self.total = self.kinetic + self.potential
 		return self.total
 
-
+	def integrate(self, f, t, h):
+		self.z = igt.rk4(f, t, h, self.z)
+		self.pos = self.z[0:2]
+		self.vel = self.z[2:4]
 class System():
 	def __init__(self, part_num, dimension, field):
 		self.particles = []
