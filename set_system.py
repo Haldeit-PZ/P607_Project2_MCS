@@ -51,7 +51,7 @@ class Particle():
 #------------------------------------------System-------------------------------------------#
 
 class System():
-	def __init__(self, part_num, dimension, field, max_mass):	
+	def __init__(self, part_num, dimension, field, max_mass, frames, step_size):	
 		"""
 		Initialize system with particels, beam, and box
 		inputs:
@@ -59,17 +59,21 @@ class System():
 			dimension: x-y length of box (float)
 			field: beam
 			max_mass: largest particle mass
+			frames: number of evolution, or iterations
+			step_size: integration step size
 		outputs:
 			system of particles, beam, box
 		"""
 		self.particles = []
 		for part in range(part_num):
-			part_i = Particle(np.random.uniform(0, max_mass), np.random.uniform(0,dimension, 2), np.random.uniform(-5,5,2)) # 5 being velocity boundary
+			part_i = Particle(np.random.uniform(0, max_mass), np.random.uniform(0,dimension, 2), np.random.uniform(-dimension / 5, dimension / 5, 2)) # velocity can't be too fast
 			self.particles.append(part_i)
 		self.field = field
 		self.max_x = dimension
 		self.max_y = dimension
 		self.max_mass = max_mass
+		self.timeline = np.arange(0, frames + 1, 1)
+		self.step_size = step_size
 	
 	def total_energy(self):
 		"""
@@ -86,7 +90,13 @@ class System():
 		return self.total_energy
 
 	def step(self):
-		pass
+		"""
+		Update each particle velocity and position
+		"""
+		for particle in self.particles:
+			for frame in self.timeline:
+				particle.integrate(self.field, frame, self.step_size)
+				# should also check boundary, if particle goes out, it should rebound by the same magnituce, and invert velocity
 
 	def plot_system(self):
 		"""
@@ -108,7 +118,7 @@ class System():
 		plot_destination = "figures/system_plot.png"
 		plt.savefig(plot_destination, dpi=500)
 			
-x = System(10, 2, 1, 10) # particles, boundary, field, max mass
+x = System(10, 2, 0, 10, 5, 1) # particles, boundary, field, max mass, frames, step size
 print(f"")
 print(f"[Vx Vy, X, Y of First Particle]: {x.particles[0].z}")
 print(f"Field Strength: {x.field}")
