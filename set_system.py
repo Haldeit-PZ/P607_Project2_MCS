@@ -1,7 +1,7 @@
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
-import intergration as igt
+import integration as igt
 
 class Particle():
 	def __init__(self, m, pos, v):
@@ -19,6 +19,7 @@ class Particle():
 		self.pos = pos
 		self.vel = v
 		self.z = np.concatenate((pos, v))  #array of positions and vel
+
 
 	def energy(self):
 		"""
@@ -46,24 +47,29 @@ class Particle():
 		self.z = igt.rk4(f, t, h, self.z)
 		self.pos = self.z[0:2]
 		self.vel = self.z[2:4]
+
+#------------------------------------------System-------------------------------------------#
+
 class System():
-	def __init__(self, part_num, dimension, field):	
+	def __init__(self, part_num, dimension, field, max_mass):	
 		"""
 		Initialize system with particels, beam, and box
 		inputs:
 			part_num: number of particles in box (int)
 			dimension: x-y length of box (float)
 			field: beam
+			max_mass: largest particle mass
 		outputs:
 			system of particles, beam, box
 		"""
 		self.particles = []
 		for part in range(part_num):
-			part_i = Particle(np.random.uniform(), np.random.uniform(0,dimension, 2), np.random.uniform(-5,5,2))
+			part_i = Particle(np.random.uniform(0, max_mass), np.random.uniform(0,dimension, 2), np.random.uniform(-5,5,2)) # 5 being velocity boundary
 			self.particles.append(part_i)
 		self.field = field
 		self.max_x = dimension
 		self.max_y = dimension
+		self.max_mass = max_mass
 	
 	def total_energy(self):
 		"""
@@ -81,10 +87,31 @@ class System():
 
 	def step(self):
 		pass
+
+	def plot_system(self):
+		for particle in self.particles:
+			plt.plot(particle.pos[0], particle.pos[1],
+				color = '#50c878', # emerald
+				marker = ".",
+				linestyle = "None",
+				markersize = particle.mass,
+				label = f"Particles")
+		plt.title(f"Particles in a Square 2D Box")
+		plt.xlabel(f"X Dimension")
+		plt.ylabel(f"Y Dimension")
+		plt.grid()
+		plt.xlim(0, self.max_x)
+		plt.ylim(0, self.max_y)
+		plot_destination = "figures/system_plot.png"
+		plt.savefig(plot_destination, dpi=500)
 			
-x = System(2, 2, 1)
-print(x.particles[0].z,x.field, x.max_x)
-print(x.total_energy())
+x = System(10, 2, 1, 10) # particles, boundary, field, max mass
+print(f"")
+print(f"[Vx Vy, X, Y of First Particle]: {x.particles[0].z}")
+print(f"Field Strength: {x.field}")
+print(f"Dimension Boundary: {x.max_x}")
+print(f"Total Energy: {x.total_energy()}")
+x.plot_system()
 		
 			
 		 
