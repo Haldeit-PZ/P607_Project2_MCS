@@ -89,6 +89,9 @@ class System():
 		pass
 
 	def plot_system(self):
+		"""
+		Plot the system under ./figures
+		"""
 		for particle in self.particles:
 			plt.plot(particle.pos[0], particle.pos[1],
 				color = '#50c878', # emerald
