@@ -125,7 +125,12 @@ class System():
 		plt.ylim(0, self.max_y)
 		plot_destination = "figures/system_plot.png"
 		plt.savefig(plot_destination, dpi=500)
-			
+	
+	def integrate_all(self):
+		for i in range(
+		
+
+
 x = System(10, 2, 0, 10, 5, 1) # particles, boundary, field, max mass, frames, step size
 print(f"")
 print(f"[Vx Vy, X, Y of First Particle]: {x.particles[0].z}")
