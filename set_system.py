@@ -48,6 +48,13 @@ class Particle():
 		self.pos = self.z[0:2]
 		self.vel = self.z[2:4]
 
+	def integration_fun(self):
+		r = self.z[0:2]
+		v = self.z[2:4]
+		drdt = v
+		dvdt = self.field
+		dzdt = np.concatenate((drdt, dzdt))
+		return dzdt
 #------------------------------------------System-------------------------------------------#
 
 class System():
@@ -89,6 +96,7 @@ class System():
 			self.total_energy += ind_energy
 		return self.total_energy
 
+	
 	def step(self):
 		"""
 		Update each particle velocity and position

@@ -20,4 +20,13 @@ def rk4(f, t, h, z, args = ()):
 	k3 = f(t + 0.5 * h, z + 0.5 * h * k2, *args)
 	k4 = f(t + h, z + h * k3, *args)
 	return z + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6
-	
+
+
+
+def integration_fun(z, field):
+	r = z[0:2]
+	v = z[2:4]
+	drdt = v
+	dvdt = field
+	dzdt = np.concatenate((drdt, dvdt))
+	return dzdt	
