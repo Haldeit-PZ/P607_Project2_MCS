@@ -70,7 +70,8 @@ class System():
 		self.max_mass = max_mass
 		self.timeline = np.arange(0, frames + 1, step_size)
 		self.step_size = step_size
-	
+		self.total_energy_list = []	
+
 	def total_energy(self):
 		"""
 		Compute total energy of N-particles
@@ -84,6 +85,18 @@ class System():
 			ind_energy = ind_part.energy()
 			self.total_energy += ind_energy
 		return self.total_energy
+	
+	def make_total_energy_list(self):
+		"""
+		Compute total energy at each timestep
+		"""
+		self.total_energy_list = np.zeros_like(self.timeline)
+		for particle in self.particles:
+			particle.e_list = []
+			particle.make_energy_list()
+			l = particle.e_list
+			self.total_energy_list = self.total_energy_list + l
+				
 
 	def iterate_over(self):
 		"""
@@ -118,18 +131,19 @@ class System():
 		############################
 
 	def plot_particle(self):
-		for frame in self.particles[0].z_list.t:
-			plt.plot(self.particles[0].z_list.y[0], self.particles[0].z_list.y[1],
-				color = '#50c878', # emerald
-				marker = ".",
-				linestyle = "None",
-				markersize = self.particles[0].mass,
-				label = f"Particles")
-			plt.hlines(self.max_y / 2 + self.beam_width, 0, self.max_x)
-			plt.hlines(self.max_y / 2 - self.beam_width, 0, self.max_x)
-			plt.xlim(0, self.max_x)
-			plt.ylim(0, self.max_y)
-		plt.savefig("figures/particle0", dpi=500)
+		for particle in self.particles:
+			for frame in particle.z_list.t:
+				plt.plot(particle.z_list.y[0], particle.z_list.y[1],
+				#	color = '#50c878', # emerald
+					marker = ".",
+					linestyle = "None",
+					markersize = particle.mass,
+					label = f"Particles")
+				plt.hlines(self.max_y / 2 + self.beam_width, 0, self.max_x)
+				plt.hlines(self.max_y / 2 - self.beam_width, 0, self.max_x)
+				plt.xlim(0, self.max_x)
+				plt.ylim(0, self.max_y)
+		plt.savefig("figures/particle10", dpi=500)
 
 
 
@@ -142,10 +156,12 @@ print(f"")
 # print(f"Total Energy: {x.total_energy()}")
 # x.plot_initial_system()
 x.iterate_over()
-x.particles[0].make_energy_list()
-print(f"p0 E: {x.particles[0].e_list}")
+#x.particles[0].make_energy_list()
+#print(f"p0 E: {x.particles[0].e_list}")
 
 x.plot_particle()
 # print(f"list particle 0: {x.particles[0].z_list}")
 			
+x.make_total_energy_list()
+print(x.total_energy_list)
 		 
