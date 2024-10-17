@@ -2,6 +2,7 @@ import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
 from integration import integration_fun1
+import imageio, os
 
 class Particle():
 	def __init__(self, m, pos, v):
@@ -126,11 +127,9 @@ class System():
 		plt.ylim(0, self.max_y)
 		plot_destination = "figures/system_plot.png"
 		plt.savefig(plot_destination, dpi=500)
-		############################
-		#### add beam on plot ######
-		############################
+		
 
-	def plot_particle(self):
+	def plot_particle_traj(self):
 		for particle in self.particles:
 			for frame in particle.z_list.t:
 				plt.plot(particle.z_list.y[0], particle.z_list.y[1],
@@ -139,11 +138,37 @@ class System():
 					linestyle = "None",
 					markersize = particle.mass,
 					label = f"Particles")
-				plt.hlines(self.max_y / 2 + self.beam_width, 0, self.max_x)
-				plt.hlines(self.max_y / 2 - self.beam_width, 0, self.max_x)
-				plt.xlim(0, self.max_x)
-				plt.ylim(0, self.max_y)
+		plt.hlines(self.max_y / 2 + self.beam_width, 0, self.max_x)
+		plt.hlines(self.max_y / 2 - self.beam_width, 0, self.max_x)
+		plt.xlim(0, self.max_x)
+		plt.ylim(0, self.max_y)
+		plt.xlabel(f"X Dimension")
+		plt.ylabel(f"Y Dimension")
+		plt.title(f"Particle Evolution in Force Field")
 		plt.savefig("figures/particle10", dpi=500)
+		plt.clf()
+
+
+	def plot_particle_byframe(self):
+		for frame in self.timeline:
+			for particle in self.particles:
+				plt.plot(particle.z_list.y[0][(int)(frame / self.step_size)], particle.z_list.y[1][(int)(frame / self.step_size)],
+				#	color = '#50c878', # emerald
+					marker = ".",
+					linestyle = "None",
+					markersize = particle.mass,
+					label = f"Particles")
+			
+			plt.hlines(self.max_y / 2 + self.beam_width, 0, self.max_x)
+			plt.hlines(self.max_y / 2 - self.beam_width, 0, self.max_x)
+			plt.xlim(0, self.max_x)
+			plt.ylim(0, self.max_y)
+			plt.xlabel(f"X Dimension")
+			plt.ylabel(f"Y Dimension")
+			plt.title(f"Particle Evolution in Force Field, frame: ({(int)(frame / self.step_size + 1)}/{len(self.timeline)})")
+			plot_frame_path = f"./animation_plots/particle_frame({(int)(frame / self.step_size + 1)}).png"
+			plt.savefig(plot_frame_path, dpi=500)
+			plt.clf()
 
 
 
@@ -159,9 +184,12 @@ x.iterate_over()
 #x.particles[0].make_energy_list()
 #print(f"p0 E: {x.particles[0].e_list}")
 
-x.plot_particle()
+x.plot_particle_traj()
+x.plot_particle_byframe()
+print(len(x.particles[1].z_list.y[1]))
+print(x.timeline)
 # print(f"list particle 0: {x.particles[0].z_list}")
 			
-x.make_total_energy_list()
+# x.make_total_energy_list()
 print(x.total_energy_list)
 		 
