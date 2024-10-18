@@ -3,6 +3,7 @@ import scipy as sp
 import matplotlib.pyplot as plt
 from integration import integration_fun1
 import imageio, os
+from natsort import natsorted
 
 class Particle():
 	def __init__(self, m, pos, v):
@@ -169,12 +170,15 @@ class System():
 			plot_frame_path = f"./animation_plots/particle_frame({(int)(frame / self.step_size + 1)}).png"
 			plt.savefig(plot_frame_path, dpi=500)
 			plt.clf()
+		images = natsorted([img for img in os.listdir("./animation_plots") if img.endswith('.png')])
+		image_list = [imageio.imread(os.path.join("./animation_plots", img)) for img in images]
+		imageio.mimsave("./gifs/animated_particles.gif", image_list, duration=0.5)
 
 
 
 
-x = System(10, 2, 1, 10, 10, 0.2) # particles, boundary, beam field, max mass, frames, step size
-#print(f"")
+x = System(10, 2, 1, 10, 10, 0.1) # particles, boundary, beam field, max mass, frames, step size
+print(f"")
 # print(f"[X, Y, Vx, Vy of First Particle]: {x.particles[0].z}")
 # print(f"Field Strength: {x.field_strength}")
 # print(f"Dimension Boundary: {x.max_x}")
@@ -186,10 +190,10 @@ x.iterate_over()
 
 x.plot_particle_traj()
 x.plot_particle_byframe()
-#print(len(x.particles[1].z_list.y[1]))
-#print(x.timeline)
+print(len(x.particles[1].z_list.y[1]))
+print(x.timeline)
 # print(f"list particle 0: {x.particles[0].z_list}")
 			
 # x.make_total_energy_list()
-#print(x.total_energy_list)
+print(x.total_energy_list)
 		 
