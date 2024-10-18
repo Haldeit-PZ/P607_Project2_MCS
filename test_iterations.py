@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import integration
 import set_system
 
-particle_num_list = np.arange(5,56,5)
+particle_num_list = np.arange(5,106,5)
 
 
 monte_iterations = 1000
@@ -13,7 +13,7 @@ def test_it(particle_num_list, monte_iterations):
 	for part in particle_num_list:
 		list1 = []
 		for i in range(monte_iterations): #repeat simulation N times
-			x = set_system.System(part,2,1,10,10,1) #initialize single system randomly
+			x = set_system.System(part,2,1,10,10,.1) #initialize single system randomly
 			x.iterate_over()                         #integrate single system
 			x.make_total_energy_list()               #find energy at each integration step
 			list1.append(x.total_energy_list)        #store single system energy list
@@ -27,10 +27,10 @@ def test_it(particle_num_list, monte_iterations):
 
 
 def plot_test_it(particle_num_list, monte_iterations):
-	test1, test2, test3 = test_it(particle_num_list, monte_iterations)
-	plt.imshow(test3)
+	list1, list2, list3 = test_it(particle_num_list, monte_iterations)
+	plt.imshow(list3)
 	plt.gca().invert_yaxis()
-	plt.colorbar()
+	plt.colorbar(location = "bottom")
 	plt.savefig("figures/energy_change.png", dpi = 500)
 	plt.clf()
 	for i in range(len(list3)):
@@ -39,7 +39,7 @@ def plot_test_it(particle_num_list, monte_iterations):
 
 	plt.imshow(list3)
 	plt.gca().invert_yaxis()
-	plt.colorbar()
+	plt.colorbar(location = "bottom")
 	plt.savefig("figures/energy_change_per.png", dpi = 500)		
 	plt.clf()
 	
@@ -51,4 +51,4 @@ def plot_test_it(particle_num_list, monte_iterations):
 	plt.savefig('figures/energy_hist.png', dpi = 500)
 	plt.clf()
 
-
+plot_test_it(particle_num_list, monte_iterations)

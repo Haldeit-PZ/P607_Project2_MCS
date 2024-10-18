@@ -174,7 +174,7 @@ class System():
 
 
 x = System(10, 2, 1, 10, 10, 0.2) # particles, boundary, beam field, max mass, frames, step size
-print(f"")
+#print(f"")
 # print(f"[X, Y, Vx, Vy of First Particle]: {x.particles[0].z}")
 # print(f"Field Strength: {x.field_strength}")
 # print(f"Dimension Boundary: {x.max_x}")
@@ -186,10 +186,10 @@ x.iterate_over()
 
 x.plot_particle_traj()
 x.plot_particle_byframe()
-print(len(x.particles[1].z_list.y[1]))
-print(x.timeline)
+#print(len(x.particles[1].z_list.y[1]))
+#print(x.timeline)
 # print(f"list particle 0: {x.particles[0].z_list}")
 			
 # x.make_total_energy_list()
-print(x.total_energy_list)
+#print(x.total_energy_list)
 		 
