@@ -147,7 +147,7 @@ class System:
         plt.grid()
         plt.xlim(0, self.max_x)
         plt.ylim(0, self.max_y)
-        plot_destination = "figures/system_plot.png"
+        plot_destination = "./figures/system_plot.png"
         plt.savefig(plot_destination, dpi=500)
 
     def plot_particle_traj(self):
@@ -169,7 +169,7 @@ class System:
         plt.xlabel(f"X Dimension")
         plt.ylabel(f"Y Dimension")
         plt.title(f"Particle Evolution in Force Field")
-        plt.savefig("figures/particle10", dpi=500)
+        plt.savefig("./figures/particle10.png", dpi=500)
         plt.clf()
 
     def plot_particle_byframe(self):
