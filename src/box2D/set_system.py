@@ -1,7 +1,7 @@
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
-from integration import integration_fun1
+from .integration import integration_fun1
 import imageio, os
 from natsort import natsorted
 
@@ -127,7 +127,7 @@ class System:
             )
             particle.z_list = particle_coords
 
-    def plot_initial_system(self):
+    def plot_initial_system(self, savedir="./figures"):
         """
         Plot the system under ./figures
         """
@@ -147,10 +147,10 @@ class System:
         plt.grid()
         plt.xlim(0, self.max_x)
         plt.ylim(0, self.max_y)
-        plot_destination = "./figures/system_plot.png"
+        plot_destination = os.path.join(savedir, "system_plot.png")
         plt.savefig(plot_destination, dpi=500)
 
-    def plot_particle_traj(self):
+    def plot_particle_traj(self, savedir="./figures"):
         for particle in self.particles:
             for frame in particle.z_list.t:
                 plt.plot(
@@ -169,10 +169,10 @@ class System:
         plt.xlabel(f"X Dimension")
         plt.ylabel(f"Y Dimension")
         plt.title(f"Particle Evolution in Force Field")
-        plt.savefig("./figures/particle10.png", dpi=500)
+        plt.savefig(os.path.join(savedir, "particle10.png"), dpi=500)
         plt.clf()
 
-    def plot_particle_byframe(self):
+    def plot_particle_byframe(self, savedir="./animation_plots", savegif="./gifs"):
         for frame in self.timeline:
             for particle in self.particles:
                 plt.plot(
