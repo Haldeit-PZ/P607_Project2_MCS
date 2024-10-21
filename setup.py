@@ -32,5 +32,5 @@ setup(
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.6',
-    scripts=['codes/set_system.py'],
+    scripts=['src/2Dbox/set_system.py'],
 )
