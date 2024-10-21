@@ -195,6 +195,7 @@ class System:
                 f"Particle Evolution in Force Field, frame: ({(int)(frame / self.step_size + 1)}/{len(self.timeline)})"
             )
             plot_frame_path = f"./animation_plots/particle_frame({(int)(frame / self.step_size + 1)}).png"
+
             plt.savefig(plot_frame_path, dpi=500)
             plt.clf()
         images = natsorted(
