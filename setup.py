@@ -10,7 +10,7 @@ setup(
     author_email='hzhou51@syr.edu',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/your-repo',
+    url='https://github.com/Haldeit-PZ/P607_Project2_MCS.git', 
     packages=find_packages(),
     install_requires=[
         'numpy',
