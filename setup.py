@@ -15,6 +15,11 @@ setup(
     install_requires=[
         'numpy',
         'scipy',
+        'matplotlib',
+        'integration',
+        'imageio',
+        'os',
+        'natsort'
     ],
     entry_points={
         'console_scripts': [
