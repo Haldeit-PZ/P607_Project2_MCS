@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from box2D.set_system import System
+from box2.set_system import System
 
 x = System(
     10, 2, 1, 10, 10, 0.1
