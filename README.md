@@ -13,3 +13,5 @@ simulateBox
 ```
 
 This will create an animation under folder ./gif, some plots showing overall trajectories, energy under ./figures. ./animation plots are the frames of the gif created.
+
+![](https://github.com/Haldeit-PZ/P607_Project2_MCS/blob/main/gifs/animated_particles.gif)
